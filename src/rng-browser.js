@@ -9,6 +9,10 @@ const rnds8 = new Uint8Array(16);
 export default function rng() {
   // lazy load so that environments that need to polyfill have a chance to do so
   if (!getRandomValues) {
+    if(wx) {
+      getRandomValues = wx.getRandomValues
+      return
+    }
     // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
     getRandomValues =
       typeof crypto !== 'undefined' &&
